@@ -5,13 +5,13 @@ const port=8080
 const ItemRouter=require('./routes/ItemRoute.js')
 const ClaimRouter=require('./routes/ClaimRoute.js')
 const UserRouter=require('./routes/UserRoute.js')
-const AuthRouter=require('./routes/AuthRoute.js')
+
 
 
 app.use('/claim',ClaimRouter)
 app.use('/user',UserRouter)
 app.use('/item',ItemRouter)
-app.use('/authenticate',AuthRouter)
+
 
 app.listen(port,async()=>{
     console.log(`server running on http://localhost:${port}`)

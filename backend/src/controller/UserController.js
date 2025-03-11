@@ -1,5 +1,6 @@
 const User=require('../Models/UserModel.js');
-const { use } = require('./AuthController.js');
+require('dotenv').config({path:'./src/config/.env'})
+
 
 const getAllUsers=async(req,res)=>{
     try{
@@ -25,5 +26,6 @@ const getUserbyID=async(req,res)=>{
     }
     
 }
+
 
 module.exports={getAllUsers,getUserbyID}

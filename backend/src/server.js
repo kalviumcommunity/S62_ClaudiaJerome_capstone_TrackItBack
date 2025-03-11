@@ -1,6 +1,7 @@
 const express=require('express')
 const app=express()
-const port=8080
+require('dotenv').config({ path: './src/config/.env' })
+const {DBconnect}=require('./Database/DB.js')
 
 const ItemRouter=require('./routes/ItemRoute.js')
 const ClaimRouter=require('./routes/ClaimRoute.js')
@@ -13,6 +14,7 @@ app.use('/user',UserRouter)
 app.use('/item',ItemRouter)
 
 
-app.listen(port,async()=>{
-    console.log(`server running on http://localhost:${port}`)
+app.listen(process.env.PORT,async()=>{
+    DBconnect()
+    console.log(`server running on http://localhost:${process.env.PORT}`)
 })

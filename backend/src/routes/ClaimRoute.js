@@ -6,4 +6,4 @@ router.get('/',getAllClaims)
 router.get('/:id',getClaimbyID)
 
 
-module.exports=router
+module.exports=router 

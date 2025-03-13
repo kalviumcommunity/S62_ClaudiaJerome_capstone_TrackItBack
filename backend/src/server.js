@@ -2,7 +2,7 @@ const express=require('express')
 const cookieParser=require('cookie-parser')
 const app=express()
 require('dotenv').config({ path: './src/config/.env' })
-const DBconnect=require('./Database/DB.js')
+const {DBconnect}=require('./Database/DB.js')
 
 
 const ItemRouter=require('./routes/ItemRoute.js')

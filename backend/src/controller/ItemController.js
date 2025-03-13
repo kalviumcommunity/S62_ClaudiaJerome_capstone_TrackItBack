@@ -12,12 +12,16 @@ const getAllItem=async(req,res)=>{
 
 const getItembyID=async(req,res)=>{
     try{
-        const id = req.params.id
+
+        const {id} = req.params
+
         const item = await Item.findById(id)
         if (!item) {
             return res.status(404).send({message: 'Item not found'})
         }
-        return res.status(200).json(item);
+
+        return res.status(200).send(item)
+        
     }catch(err){
         return res.status(500).send({ Error: err.message })
         

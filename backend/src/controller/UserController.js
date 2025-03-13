@@ -13,7 +13,7 @@ const getAllUsers=async(req,res)=>{
 
 const getUserbyID=async(req,res)=>{
     try{
-        const id=req.params
+        const {id}=req.params
 
         const user=await User.findById(id).select("-password");
 

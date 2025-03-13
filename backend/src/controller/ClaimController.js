@@ -2,7 +2,7 @@ const Claim=require('../Models/ClaimModel.js')
 
 const getAllClaims=async(req,res)=>{
     try{
-        const claims=await Claim.find().populate("itemID").populate("userID");
+        const claims=await Claim.find().populate("itemId").populate("userId");
         return res.status(200).send(claims)
 
     }catch(err){
@@ -12,8 +12,8 @@ const getAllClaims=async(req,res)=>{
 
 const getClaimbyID=async(req,res)=>{
     try{
-        const id=req.params
-        const claim=await Claim.findById(id).populate("itemId").populate("userID");
+        const {id}=req.params
+        const claim=await Claim.findById(id).populate("itemId").populate("userId");
 
         if(!claim){
             return res.status(404).send({message:'claim not found'})

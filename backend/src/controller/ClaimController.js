@@ -1,4 +1,5 @@
 const Claim=require('../Models/ClaimModel.js')
+const Item=require('../Models/ItemModel.js')
 
 const getAllClaims=async(req,res)=>{
     try{
@@ -24,4 +25,27 @@ const getClaimbyID=async(req,res)=>{
     }
 }
 
-module.exports={getAllClaims,getClaimbyID}
+const createClaim=async(req,res)=>{
+    try{
+        const {itemId}=req.body
+        if(!itemId){
+            return res.status(400).send({message:'Item Id is required'})
+        }
+
+        const checkifClaimexists=await Claim.findOne({itemId,userId:req.user._id})
+        if(checkifClaimexists){
+            return res.status(400).send({message:'You have already submitted a claim for this item'})
+        }
+
+        const claim=await Claim.create({itemId,userId:req.user._id,status:'pending'})
+        return res.status(201).send({message:'Claim request submitted successfully',claim})
+        
+    }catch(err){
+        return res.status(500).send({ Error: err.message })
+    }
+}
+
+
+
+
+module.exports={getAllClaims,getClaimbyID,createClaim}

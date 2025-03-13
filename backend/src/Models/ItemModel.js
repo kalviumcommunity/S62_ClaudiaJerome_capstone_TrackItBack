@@ -19,12 +19,12 @@ const ItemSchema=new mongoose.Schema({
         required:true
     },
     status:{
-        type:{
+        
             type:String,
-            enum:["lost","found","claimed"]
-        }
+            enum:["lost","found","claimed"],
+            required:true
     },
-    imageUrl:{
+    imagePath:{
         type:String,
         required:true
     }

@@ -4,10 +4,10 @@ require('dotenv').config({ path: './src/config/.env' })
 const DBconnect=async()=>{
     try{
         mongoose.connect(process.env.DB_URL)
-        console.log('connected to Database')
+        console.log('connection to Database is successfull')
 
     }catch(err){
-        console.log("Connection failed",err)
+        console.log("Failed to connect to Database",err)
     }
 }
 

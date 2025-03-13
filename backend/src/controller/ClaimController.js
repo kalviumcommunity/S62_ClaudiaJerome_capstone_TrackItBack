@@ -28,6 +28,7 @@ const getClaimbyID=async(req,res)=>{
 const createClaim=async(req,res)=>{
     try{
         const {itemId}=req.body
+        const {status}=req.body
         if(!itemId){
             return res.status(400).send({message:'Item Id is required'})
         }
@@ -37,7 +38,7 @@ const createClaim=async(req,res)=>{
             return res.status(400).send({message:'You have already submitted a claim for this item'})
         }
 
-        const claim=await Claim.create({itemId,userId:req.user._id,status:'pending'})
+        const claim=await Claim.create({itemId,userId:req.user._id,status:status||'pending'})
         return res.status(201).send({message:'Claim request submitted successfully',claim})
         
     }catch(err){

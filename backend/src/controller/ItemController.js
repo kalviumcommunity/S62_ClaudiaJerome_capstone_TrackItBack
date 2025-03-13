@@ -12,7 +12,7 @@ const getAllItem=async(req,res)=>{
 
 const getItembyID=async(req,res)=>{
     try{
-        const id = req.params.id
+        const {id} = req.params.id
         const item = await Item.findById(id)
         if (!item) {
             return res.status(404).send({message: 'Item not found'})
@@ -35,6 +35,10 @@ const Lostitem=async(req,res)=>{
         if(!name || !description || !location || !status || !imageUrl){
             return res.status(400).send({message:'All the fields are required'})
         }
+        const checkifitemAlreadyExists=await Item.findOne({name})
+        if(checkifitemAlreadyExists){
+            return res.status(400).send({message:'Item already registered'})
+        }
         const item=await Item.create({name,description,location,status,imagePath:imageUrl,userId:req.user._id})
         res.status(201).send({message:'Lost item reported successfully',item})
         
@@ -53,6 +57,10 @@ const foundItem=async(req,res)=>{
         const imageUrl=req.file.path
         if(!name || !description || !location || !imageUrl){
             return res.status(400).send({message:'All the fields are required'})
+        }
+        const checkifitemAlreadyExists = await Item.findOne({ name })
+        if (checkifitemAlreadyExists) {
+            return res.status(400).send({ message: 'Item already registered' })
         }
         const item=await Item.create({name,description,location,status:'found',imagePath:imageUrl,userId:req.user._id})
         return res.status(201).json({message:'Found Item reported successfully',item})

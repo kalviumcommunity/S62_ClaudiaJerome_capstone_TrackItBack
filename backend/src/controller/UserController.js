@@ -33,7 +33,7 @@ const register=async(req,res)=>{
     try{
         const {name,email,password,phone}=req.body
         if(!name || !email || !password || !phone){
-            return res.status(400).sned({message:'All the fields are required'})
+            return res.status(400).send({message:'All the fields are required'})
         }
 
         const checkifUserExists=await User.findOne({email})

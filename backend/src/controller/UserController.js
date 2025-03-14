@@ -66,9 +66,60 @@ const login=async(req,res)=>{
         return res.status(201).send({message:'User logged in successfully',user:{id:user._id,email}})
     }catch(err){
         return res.status(500).send({ Error: err.message })
+        
+    }
+}
+
+const updateUserDetails=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const updates=req.body
+
+        if('password' in updates){
+            return res.status(400).send({message:'Password update is not allowed here'})
+        }
+        const updateduser=await User.findByIdAndUpdate(id,updates,{new:true})
+        if(!updateduser){
+            return res.status(404).send({message:'user not found'})
+        }
+
+        return res.status(200).json(updateduser)
+        
+    }catch(err){
+        return res.status(500).send({ Error: err.message })
+        
+    }
+}
+
+const updateUserPassword=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const {oldPassword,newPassword}=req.body
+
+        if(!oldPassword || !newPassword){
+            return res.status(400).send({message:'Both old password and new password are required'})
+        }
+        
+        const user=await User.findById(id)
+        if(!user){
+            return res.status(404).send({message:'User not found'})
+        }
+
+        const isMatch=await bcrypt.compare(oldPassword,user.password)
+        if(!isMatch){
+            return res.status(400).send({message:'Incorrect old password'})
+        }
+
+        const hashedPassword=await bcrypt.hash(newPassword,10)
+        user.password=hashedPassword
+        await user.save()
+
+        return res.status(200).send({message:'Password updated successfully'})
+    }catch(err){
+        return res.status(500).send({ Error: err.message })
 
     }
 }
 
 
-module.exports={getAllUsers,getUserbyID,register,login}
+module.exports={getAllUsers,getUserbyID,register,login,updateUserDetails,updateUserPassword}

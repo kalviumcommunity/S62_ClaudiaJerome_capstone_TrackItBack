@@ -77,8 +77,30 @@ const foundItem = async (req, res) => {
 
     } catch (err) {
         return res.status(500).send({ Error: err.message })
+        
+    }
+}
+
+const updateItem=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const updates=req.body
+
+        if (req.file) {
+            updates.imageUrl = req.file.path; 
+        }
+
+        const updatedItem=await Item.findByIdAndUpdate(id,updates,{new:true})
+        if(!updatedItem){
+            return res.status(404).send({message:'Item not found'})
+        }
+        return res.status(200).json(updatedItem)
+
+        
+    }catch(err){
+        return res.status(500).send({ Error: err.message })
 
     }
 }
 
-module.exports = { getAllItem, getItembyID, Lostitem, foundItem }
+module.exports = { getAllItem, getItembyID, Lostitem, foundItem,updateItem }

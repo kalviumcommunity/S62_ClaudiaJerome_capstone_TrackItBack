@@ -46,7 +46,32 @@ const createClaim=async(req,res)=>{
     }
 }
 
+const updateClaimStatus = async (req, res) => {
+    try {
+        const { claimId } = req.params
+        const { status } = req.body
 
 
 
-module.exports={getAllClaims,getClaimbyID,createClaim}
+        if (!['verified', 'rejected'].includes(status)) {
+            return res.status(400).send({ message: 'Invalid status' })
+        }
+
+        const claim = await Claim.findById(claimId);
+        // console.log(claim)
+        if (!claim) {
+            return res.status(404).send({ message: 'Claim is not found' })
+        }
+        claim.status = status
+        await claim.save()
+        return res.status(200).send({ message: `claim ${status} successfully`, claim })
+
+    } catch (err) {
+        return res.status(500).send({ Error: err.message })
+
+    }
+}
+
+
+
+module.exports={getAllClaims,getClaimbyID,createClaim,updateClaimStatus}

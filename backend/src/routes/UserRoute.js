@@ -9,7 +9,7 @@ router.get('/:id',getUserbyID)
 router.post('/signup',register)
 router.post('/signin',login)
 
-router.put('/userdetails/:id',updateUserDetails)
-router.put('/userPassword/:id',updateUserPassword)
+router.put('/userdetails/:id',authMiddleware,updateUserDetails)
+router.put('/userPassword/:id',authMiddleware,updateUserPassword)
 
 module.exports = router

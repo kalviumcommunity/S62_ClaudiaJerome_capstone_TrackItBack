@@ -10,7 +10,7 @@ router.get('/:id',getItembyID)
 router.post('/lostitem', authMiddleware,upload.single('imagePath'),Lostitem)
 router.post('/founditem',authMiddleware, upload.single('imagePath'),foundItem)
 
-router.put('/updateLostItemDetails/:id',upload.single('imagePath'),authMiddleware,updateItem)
+router.put('/updateItemDetails/:id', authMiddleware, upload.single('imagePath'),updateItem)
 
 
 module.exports = router

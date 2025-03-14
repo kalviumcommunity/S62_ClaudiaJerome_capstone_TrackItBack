@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 
 const ItemSchema=new mongoose.Schema({
-    userId:{
+    userId:{ //this is refering to the User model
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true

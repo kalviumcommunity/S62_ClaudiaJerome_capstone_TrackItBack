@@ -18,4 +18,4 @@ const isItemowner = async (req, res, next) => {
     next()
 }
 
-module.exports = isItemowner
+module.exports = {isItemowner}

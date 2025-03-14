@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 const {getAllClaims,getClaimbyID,createClaim,updateClaimStatus}=require('../controller/ClaimController.js')
 const authMiddleware=require('../middleware/Authmiddleware.js')
-const isItemowner=require('../middleware/isItemOwner.js')
+const { isItemowner }=require('../middleware/isItemOwner.js')
 
 
 router.get('/',getAllClaims)

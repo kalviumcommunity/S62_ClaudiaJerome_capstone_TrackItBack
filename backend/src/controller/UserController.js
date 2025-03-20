@@ -61,7 +61,7 @@ const login=async(req,res)=>{
         if(!user || !isMatch){
             return res.status(401).send({message:'Invalid credentails'})
         }
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY,{expiresIn:'1h'})
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY,{expiresIn:'1h'}) //using username/password authentication
         res.cookie('token', token, { httpOnly: true, secure: true }) //When a user logs in, it generate a JWT and store it in an HTTP-only cookie.
         return res.status(201).send({message:'User logged in successfully',user:{id:user._id,email}})
     }catch(err){

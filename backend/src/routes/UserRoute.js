@@ -10,6 +10,6 @@ router.post('/signup',register)
 router.post('/signin',login)
 
 router.put('/userdetails/:id',authMiddleware,updateUserDetails)
-router.put('/userPassword/:id',authMiddleware,updateUserPassword)
+router.put('/userPassword/:id', authMiddleware, updateUserPassword) //both these routes require authentication using authMiddleware
 
 module.exports = router

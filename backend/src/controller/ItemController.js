@@ -17,7 +17,7 @@ const getItembyID=async(req,res)=>{
         if (!item) {
             return res.status(404).send({ message: 'Item not found' })
         }
-        return res.sned(item)
+        return res.send(item)
     }catch(err){
         return res.status(500).send({ Error: err.message })
 
@@ -28,11 +28,11 @@ const getItembyID=async(req,res)=>{
 const Lostitem = async (req, res) => {
     try {
         const { name, description, location, status } = req.body
-        if (!req.file) {
+        if (!req.files || req.files.length===0) {
             return res.status(400).send({ message: 'Image upload failed' });
         }
-        const imageUrl = req.file.path
-        if (!name || !description || !location || !status || !imageUrl) {
+        const imageUrls = req.files.map(file=>file.path)
+        if (!name || !description || !location || !status || !imageUrls.length===0) {
             return res.status(400).send({ message: 'All the fields are required' })
         }
         const checkifitemAlreadyExists = await Item.findOne({
@@ -44,7 +44,7 @@ const Lostitem = async (req, res) => {
         if (checkifitemAlreadyExists) {
             return res.status(400).send({ message: 'Item already registered' })
         }
-        const item = await Item.create({ name, description, location, status, imagePath: imageUrl, userId: req.user._id })
+        const item = await Item.create({ name, description, location, status, imagePath: imageUrls, userId: req.user._id })
         res.status(201).send({ message: 'Lost item reported successfully', item })
 
     } catch (err) {
@@ -56,11 +56,11 @@ const Lostitem = async (req, res) => {
 const foundItem = async (req, res) => {
     try {
         const { name, description, location } = req.body
-        if (!req.file) {
+        if (!req.files || req.files.length===0) {
             return res.status(400).send({ message: 'Image upload failed' });
         }
-        const imageUrl = req.file.path
-        if (!name || !description || !location || !imageUrl) {
+        const imageUrls = req.files.map(file=>file.path)
+        if (!name || !description || !location || !imageUrls.length===0) {
             return res.status(400).send({ message: 'All the fields are required' })
         }
         const checkifitemAlreadyExists = await Item.findOne({
@@ -72,7 +72,7 @@ const foundItem = async (req, res) => {
         if (checkifitemAlreadyExists) {
             return res.status(400).send({ message: 'Item already registered' })
         }
-        const item = await Item.create({ name, description, location, status: 'found', imagePath: imageUrl, userId: req.user._id })
+        const item = await Item.create({ name, description, location, status: 'found', imagePath: imageUrls, userId: req.user._id })
         return res.status(201).json({ message: 'Found Item reported successfully', item })
 
     } catch (err) {
@@ -86,7 +86,7 @@ const updateItem=async(req,res)=>{
         const {id}=req.params
         const updates=req.body
 
-        if (req.file) {
+        if (req.files && req.files.length>0) {
             updates.imageUrl = req.file.path; 
         }
 

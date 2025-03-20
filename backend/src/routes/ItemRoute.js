@@ -7,10 +7,10 @@ const authMiddleware=require('../middleware/Authmiddleware.js')
 router.get('/',getAllItem)
 router.get('/:id',getItembyID)
 
-router.post('/lostitem', authMiddleware,upload.single('imagePath'),Lostitem)
-router.post('/founditem',authMiddleware, upload.single('imagePath'),foundItem)
+router.post('/lostitem', authMiddleware, upload,Lostitem)
+router.post('/founditem',authMiddleware, upload,foundItem)
 
-router.put('/updateItemDetails/:id', authMiddleware, upload.single('imagePath'),updateItem)
+router.put('/updateItemDetails/:id', authMiddleware, upload,updateItem)
 
 
 module.exports = router

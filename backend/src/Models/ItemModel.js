@@ -24,10 +24,10 @@ const ItemSchema=new mongoose.Schema({
             enum:["lost","found","claimed"],
             required:true
     },
-    imagePath:{
+    imagePath:[{
         type:String,
         required:true
-    }
+    }]
 })
 
 const Item=mongoose.model("Item",ItemSchema)

@@ -5,7 +5,11 @@ require('dotenv').config({ path: './src/config/.env' })
 const authMiddleware=async(req,res,next)=>{
     try{
         
-        const token=req.cookies.token
+        // const token=req.cookies.token
+        // console.log(token)
+
+        const {token} = req.query // ✅ Extract token from headers
+        console.log("Received Token:", token); 
         if(!token){
             return res.status(401).send({message:'Unauthorized'})
         }

@@ -1,16 +1,16 @@
-const multer=require('multer')
-const {CloudinaryStorage}=require('multer-storage-cloudinary')
-const cloudinary=require('../config/cloudinary.js')
+const multer = require('multer')
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const cloudinary = require('../config/cloudinary.js')
 
-const storage=new CloudinaryStorage({
-    cloudinary:cloudinary,
-    params:{
-        folder:'trackitback',
-        allowed_formats:['jpg','png','jpeg']
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'trackitback',
+        format: async (req, file) => 'jpeg'
     }
 })
 
-const upload=multer({storage}).array('images',5)
-module.exports=upload
+const upload = multer({ storage })
+module.exports = upload
 
 

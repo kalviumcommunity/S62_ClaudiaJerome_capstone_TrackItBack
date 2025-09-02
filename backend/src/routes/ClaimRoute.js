@@ -6,7 +6,7 @@ const { isItemowner }=require('../middleware/isItemOwner.js')
 
 
 router.get('/',getAllClaims)
-router.get('/:id',getClaimbyID)
+router.get('/:id',getClaimbyID) 
 
 router.post('/claimitem',authMiddleware,createClaim)
 

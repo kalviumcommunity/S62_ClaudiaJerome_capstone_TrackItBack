@@ -13,7 +13,8 @@ const getAllItem = async (req, res) => {
 const getItembyID=async(req,res)=>{
     try{
         const {id}=req.params
-        const item = await Item.findById(id)
+        const item = await Item.findById(id).populate('userId')
+        console.log(item)
         if (!item) {
             return res.status(404).send({ message: 'Item not found' })
         }
@@ -39,6 +40,7 @@ const Lostitem = async (req, res) => {
             name,
             location,
             userId: req.user._id,
+            imagePath: imageUrls,
             status: "lost"
         })
         if (checkifitemAlreadyExists) {
@@ -67,6 +69,7 @@ const foundItem = async (req, res) => {
             name,
             location,
             userId: req.user._id,
+            imagePath: imageUrls,
             status: "found"
         })
         if (checkifitemAlreadyExists) {
@@ -102,5 +105,7 @@ const updateItem=async(req,res)=>{
 
     }
 }
+
+
 
 module.exports = { getAllItem, getItembyID, Lostitem, foundItem,updateItem }

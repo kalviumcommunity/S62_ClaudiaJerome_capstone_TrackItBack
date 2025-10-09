@@ -30,7 +30,7 @@ const ProfilePage = () => {
                 const payload = JSON.parse(atob(token.split(".")[1])); // Decoding JWT
                 const userId = payload.id;
 
-                const response = await axios.get(`http://localhost:8080/user/${userId}`, {
+                const response = await axios.get(`https://s62-claudiajerome-capstone-trackitback.onrender.com/user/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true,
                 });

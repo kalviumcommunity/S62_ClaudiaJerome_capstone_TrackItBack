@@ -48,7 +48,7 @@ const Signup = () => {
 
 
         try {
-            const res = await axios.post("http://localhost:8080/user/signup", formDataToSend, {
+            const res = await axios.post("https://s62-claudiajerome-capstone-trackitback.onrender.com/user/signup", formDataToSend, {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "multipart/form-data", // Important for file upload

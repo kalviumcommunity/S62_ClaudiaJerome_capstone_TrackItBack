@@ -18,7 +18,7 @@ function SingleItemPage() {
     useEffect(()=>{
         const fetch=async()=>{
             try{
-                const response=await axios.get(`http://localhost:8080/item/${id}`)
+                const response = await axios.get(`https://s62-claudiajerome-capstone-trackitback.onrender.com/item/${id}`)
                 setItem(response.data)
                 console.log(response.data)
                 

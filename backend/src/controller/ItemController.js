@@ -106,6 +106,27 @@ const updateItem=async(req,res)=>{
     }
 }
 
+const deleteItemById=async(req,res)=>{
+    try{
+        const {id}=req.params;
+
+        const item=await Item.findByIdAndDelete(id);
+        if(!item){
+            return res.status(404).send({message:'Item not found'})
+        }
+
+        //only the user who created the item can delete it
+        if (item.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: "You can delete only your own items" });
+        }
+
+        await item.remove();
+        return res.status(200).json({ message: "Item deleted successfully" });
+    }catch(err){
+        return res.status(500).send({ Error: err.message })
+    }
+}
 
 
-module.exports = { getAllItem, getItembyID, Lostitem, foundItem,updateItem }
+
+module.exports = { getAllItem, getItembyID, Lostitem, foundItem,updateItem,deleteItemById }

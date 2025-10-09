@@ -8,7 +8,7 @@ const Item = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/item/");
+                const response = await axios.get("https://s62-claudiajerome-capstone-trackitback.onrender.com/item/");
                 console.log("Fetched items:", response.data);
                 setItems(response.data);
             } catch (error) {

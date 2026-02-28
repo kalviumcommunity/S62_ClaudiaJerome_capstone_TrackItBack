@@ -30,6 +30,7 @@ const YourItem = ({ userId }) => {
         fetchUserItems();
     }, [userId]);
 
+    // Function to handle item deletion
     const handleDelete = async (itemId) => {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -48,7 +49,7 @@ const YourItem = ({ userId }) => {
                     withCredentials: true,
                 }
             );
-            // Remove deleted item from state
+            // Remove the deleted item from the state to update the UI
             setItems((prevItems) => prevItems.filter((item) => item._id !== itemId));
             alert("Item deleted successfully!");
         } catch (error) {
